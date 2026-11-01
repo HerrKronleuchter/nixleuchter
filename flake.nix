@@ -41,7 +41,6 @@
               };
               security.sudo.wheelNeedsPassword = false;
 
-              # Nötig, damit dein Nutzer per nixos-rebuild Pakete auf den Pi kopieren darf
               nix.settings.trusted-users = [
                 "root"
                 "@wheel"
