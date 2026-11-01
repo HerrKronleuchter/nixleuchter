@@ -47,8 +47,10 @@
                 "@wheel"
               ];
 
-              # Nur für den Notfall am Monitor, später wieder entfernen
-              #users.users.root.initialPassword = "temporaer";
+              services.openssh.settings = {
+                PermitRootLogin = "no";
+                PasswordAuthentication = false;
+              };
 
               services.avahi = {
                 enable = true;
