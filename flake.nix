@@ -41,11 +41,6 @@
               };
               security.sudo.wheelNeedsPassword = false;
 
-              nix.settings.trusted-users = [
-                "root"
-                "@wheel"
-              ];
-
               services.openssh.settings = {
                 PermitRootLogin = "no";
                 PasswordAuthentication = false;
@@ -70,6 +65,11 @@
                 "nix-command"
                 "flakes"
               ];
+              nix.settings.trusted-users = [
+                "root"
+                "@wheel"
+              ]; #### TODO settings zusammenfassen
+
 
               system.stateVersion = "26.05";
             }
