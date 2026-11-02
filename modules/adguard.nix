@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   services.adguardhome = {
     enable = true;
@@ -38,7 +38,7 @@
         map
           (url: {
             enabled = true;
-            url = url;
+            inherit url;
           })
           [
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
