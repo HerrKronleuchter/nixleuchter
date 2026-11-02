@@ -8,7 +8,10 @@
     openFirewall = true;
     settings = {
       dns = {
-        bind_hosts = [ "0.0.0.0" "::" ];
+        bind_hosts = [
+          "0.0.0.0"
+          "::"
+        ];
         port = 53;
         upstream_dns = [
           "tls://dns.digitale-gesellschaft.ch"
