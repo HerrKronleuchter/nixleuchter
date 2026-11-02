@@ -22,9 +22,9 @@
         specialArgs = inputs;
         modules = [
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
-          ./hardware.nix
-          ./adguard.nix
-          ./tailscale.nix
+          ./modules/hardware.nix
+          ./modules/adguard.nix
+          ./modules/tailscale.nix
           (
             { pkgs, ... }:
             {
