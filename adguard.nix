@@ -3,10 +3,13 @@
   services.adguardhome = {
     enable = true;
     # You can select any ip and port, just make sure to open firewalls where needed
-    host = "127.0.0.1";
+    host = "0.0.0.0";
     port = 3003;
+    openFirewall = true;
     settings = {
       dns = {
+        bind_hosts = [ "0.0.0.0" ];
+        port = 53;
         upstream_dns = [
           # Example config with quad9
           "9.9.9.9#dns.quad9.net"
@@ -14,6 +17,10 @@
           # Uncomment the following to use a local DNS service (e.g. Unbound)
           # Additionally replace the address & port as needed
           # "127.0.0.1:5335"
+        ];
+        bootstrap_dns = [
+          "9.9.9.9"
+          "149.112.112.112"
         ];
       };
       filtering = {
@@ -37,7 +44,18 @@
           [
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
+            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+            "https://v.firebog.net/hosts/Easylist.txt"
           ];
     };
   };
+
+  networking.firewall.allowedTCPPorts = [ 53 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
+  networking.nameservers = [
+    "127.0.0.1"
+    "9.9.9.9"
+  ];
+
+  services.resolved.enable = false;
 }
