@@ -45,7 +45,7 @@
           ];
     };
   };
-  
+
   networking = {
     firewall = {
       allowedTCPPorts = [ 53 ];
@@ -55,7 +55,7 @@
       "127.0.0.1"
       "9.9.9.9"
     ];
-  }
+  };
   # networking.firewall.allowedTCPPorts = [ 53 ];
   # networking.firewall.allowedUDPPorts = [ 53 ];
   # networking.nameservers = [
