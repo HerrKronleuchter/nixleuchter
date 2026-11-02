@@ -24,6 +24,7 @@
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
           ./hardware.nix
           ./adguard.nix
+          ./tailscale.nix
           (
             { pkgs, ... }:
             {
@@ -44,7 +45,6 @@
               security.sudo.wheelNeedsPassword = false;
 
               services = {
-                tailscale.enable = true;
                 openssh = {
                   enable = true;
                   settings = {
