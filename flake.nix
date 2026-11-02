@@ -63,14 +63,6 @@
                 htop
                 btop
               ];
-              # nix.settings.experimental-features = [
-              #   "nix-command"
-              #   "flakes"
-              # ];
-              # nix.settings.trusted-users = [
-              #   "root"
-              #   "@wheel"
-              # ]; #### TODO settings zusammenfassen
 
               nix.settings = {
                 # Enable flakes
