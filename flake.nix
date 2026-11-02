@@ -2,6 +2,7 @@
   description = "NixOS on Raspberry Pi 5";
 
   inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+  #inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
 
   nixConfig = {
     extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
@@ -12,6 +13,10 @@
 
   outputs =
     { self, nixos-raspberrypi, ... }@inputs:
+    let
+      system = "aarch64-darwin";
+      pkgs = nixos-raspberrypi.inputs.nixpkgs.legacyPackages.${system};
+    in
     {
       nixosConfigurations.rpi5 = nixos-raspberrypi.lib.nixosSystem {
         specialArgs = inputs;
@@ -26,7 +31,6 @@
               boot.loader.raspberry-pi.bootloader = "kernel";
 
               users.users.kronleuchter = {
-                # # TODO_ user zusammenfassen
                 isNormalUser = true;
                 extraGroups = [
                   "wheel"
@@ -79,6 +83,17 @@
               system.stateVersion = "26.05";
             }
           )
+        ];
+      };
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          nixfmt
+          deadnix
+          statix
+          nixos-rebuild
+          nix-tree
+          nix-diff
         ];
       };
     };
