@@ -23,6 +23,7 @@
         modules = [
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
           ./hardware.nix
+          ./adguard.nix
           (
             { pkgs, ... }:
             {
