@@ -43,6 +43,7 @@
               security.sudo.wheelNeedsPassword = false;
 
               services = {
+                tailscale.enable = true;
                 openssh = {
                   enable = true;
                   settings = {
@@ -95,6 +96,10 @@
           nix-tree
           nix-diff
         ];
+        shellHook = ''
+          export TMPDIR=/tmp
+          echo "Welcome to the NixOS Raspberry Pi 5 development shell!"
+        '';
       };
     };
 }
