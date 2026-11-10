@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.adguardhome = {
     enable = true;
     # You can select any ip and port, just make sure to open firewalls where needed

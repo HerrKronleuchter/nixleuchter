@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.tailscale = {
     enable = true;
     openFirewall = true; # UDP 41641 -> direct connection to Tailscale network
