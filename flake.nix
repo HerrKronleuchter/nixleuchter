@@ -18,57 +18,16 @@
         specialArgs = inputs;
         modules = [
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
+          ./configuration.nix
           ./modules/hardware.nix
-          #./modules/configuration.nix
           ./modules/iam.nix
           ./modules/adguard.nix
           ./modules/tailscale.nix
-          (
-            { pkgs, ... }:
-            {
-              networking.hostName = "rpi5";
+          (_: {
+            networking.hostName = "rpi5";
 
-              boot.loader.raspberry-pi.bootloader = "kernel";
-
-              services = {
-                openssh = {
-                  enable = true;
-                  settings = {
-                    PermitRootLogin = "no";
-                    PasswordAuthentication = false;
-                  };
-                };
-                avahi = {
-                  enable = true;
-                  nssmdns4 = true;
-                  publish = {
-                    enable = true;
-                    addresses = true;
-                  };
-                };
-              };
-
-              environment.systemPackages = with pkgs; [
-                vim
-                btop
-              ];
-
-              nix.settings = {
-                # Enable flakes
-                extra-experimental-features = [
-                  "nix-command"
-                  "flakes"
-                ];
-                # Enable non-root users to use nix commands
-                trusted-users = [
-                  "root"
-                  "@wheel"
-                ];
-              };
-
-              system.stateVersion = "26.05";
-            }
-          )
+            system.stateVersion = "26.05";
+          })
         ];
       };
 
