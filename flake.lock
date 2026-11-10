@@ -97,7 +97,11 @@
     },
     "root": {
       "inputs": {
-        "nixos-raspberrypi": "nixos-raspberrypi"
+        "nixos-raspberrypi": "nixos-raspberrypi",
+        "nixpkgs": [
+          "nixos-raspberrypi",
+          "nixpkgs"
+        ]
       }
     }
   },
