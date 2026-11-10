@@ -11,4 +11,10 @@ _: {
   };
   security.sudo.wheelNeedsPassword = false;
 
+  # Enable non-root users to use nix commands
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+
 }
