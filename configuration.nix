@@ -32,11 +32,6 @@
       "nix-command"
       "flakes"
     ];
-    # Enable non-root users to use nix commands
-    trusted-users = [
-      "root"
-      "@wheel"
-    ];
   };
 
 }
