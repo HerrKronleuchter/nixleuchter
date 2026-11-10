@@ -2,7 +2,7 @@
   description = "NixOS on Raspberry Pi 5";
 
   inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-  #inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
+  inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
 
   nixConfig = {
     extra-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
@@ -87,6 +87,8 @@
           )
         ];
       };
+
+      formatter = builtins.mapAttrs (_system: pkgs: pkgs.nixfmt-tree) inputs.nixpkgs.legacyPackages;
 
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
