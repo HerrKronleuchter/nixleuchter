@@ -1,5 +1,5 @@
 {
-  description = "NixOS on Raspberry Pi 5";
+  description = "Homeserver NixOS on Raspberry Pi";
 
   inputs.nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   #inputs.nixpkgs.follows = "nixos-raspberrypi/nixpkgs";
@@ -14,6 +14,7 @@
   outputs =
     { nixos-raspberrypi, ... }@inputs:
     {
+      # Config for raspi 5
       nixosConfigurations.rpi5 = nixos-raspberrypi.lib.nixosSystem {
         specialArgs = inputs;
         modules = [
@@ -25,6 +26,23 @@
           ./modules/tailscale.nix
           (_: {
             networking.hostName = "rpi5";
+
+            system.stateVersion = "26.05";
+          })
+        ];
+      };
+      # Config for raspi4
+      nixosConfigurations.home-pi = nixos-raspberrypi.lib.nixosSystem {
+        specialArgs = inputs;
+        modules = [
+          { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
+          ./configuration.nix
+          ./modules/hardware.nix
+          ./modules/iam.nix
+          ./modules/adguard.nix
+          ./modules/tailscale.nix
+          (_: {
+            networking.hostName = "home-pi";
 
             system.stateVersion = "26.05";
           })
