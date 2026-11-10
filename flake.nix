@@ -19,7 +19,7 @@
         modules = [
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
           ./modules/hardware.nix
-          ./modules/configuration.nix
+          #./modules/configuration.nix
           ./modules/iam.nix
           ./modules/adguard.nix
           ./modules/tailscale.nix
@@ -49,9 +49,7 @@
               };
 
               environment.systemPackages = with pkgs; [
-                git
                 vim
-                htop
                 btop
               ];
 
