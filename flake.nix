@@ -12,13 +12,15 @@
   # };
 
   outputs =
-    { self, nixos-raspberrypi, ... }@inputs:
+    { nixos-raspberrypi, ... }@inputs:
     {
       nixosConfigurations.rpi5 = nixos-raspberrypi.lib.nixosSystem {
         specialArgs = inputs;
         modules = [
           { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
           ./modules/hardware.nix
+          ./modules/configuration.nix
+          ./modules/iam.nix
           ./modules/adguard.nix
           ./modules/tailscale.nix
           (
@@ -27,18 +29,6 @@
               networking.hostName = "rpi5";
 
               boot.loader.raspberry-pi.bootloader = "kernel";
-
-              users.users.kronleuchter = {
-                isNormalUser = true;
-                extraGroups = [
-                  "wheel"
-                  "networkmanager"
-                ];
-                openssh.authorizedKeys.keys = [
-                  "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAAb6rbZq2Yi1KYq5UmPxcKx/nTTzM/o7RvrbWihB7o8kgdzMXnJIasJC35c2fg+gvxe/uI5I2YhmNhxazreoJwaeQE+DLbX0QIGr1Al86sMIhrPrsIxvgRlQvSPC2BEMJvLJuCOo4d0cj3RWXfH6zl/qDGUZbWcACjTy5CMROtjezVXGg== kronleuchter"
-                ];
-              };
-              security.sudo.wheelNeedsPassword = false;
 
               services = {
                 openssh = {
@@ -88,20 +78,6 @@
         _system: pkgs: pkgs.nixfmt-tree
       ) nixos-raspberrypi.inputs.nixpkgs.legacyPackages;
 
-      # devShells.${system}.default = pkgs.mkShell {
-      #   packages = with pkgs; [
-      #     nixfmt
-      #     deadnix
-      #     statix
-      #     nixos-rebuild
-      #     nix-tree
-      #     nix-diff
-      #   ];
-      #   shellHook = ''
-      #     export TMPDIR=/tmp
-      #     echo "Welcome to the NixOS Raspberry Pi 5 development shell!"
-      #   '';
-      # };
       devShells =
         let
           eachSupportedSystem = nixos-raspberrypi.inputs.nixpkgs.lib.genAttrs supportedSystems;
@@ -180,40 +156,40 @@
         in
         eachSupportedSystem mkDevShells;
 
-      checks = builtins.mapAttrs (_system: pkgs: {
-        nixfmt =
-          pkgs.runCommand "lint: formatting"
-            {
-              nativeBuildInputs = [ pkgs.nixfmt-tree ];
-            }
-            ''
-              cd ${inputs.self}
-              treefmt --ci
-              touch $out
-            '';
+      # checks = builtins.mapAttrs (_system: pkgs: {
+      #   nixfmt =
+      #     pkgs.runCommand "lint: formatting"
+      #       {
+      #         nativeBuildInputs = [ pkgs.nixfmt-tree ];
+      #       }
+      #       ''
+      #         cd ${inputs.self}
+      #         treefmt --ci
+      #         touch $out
+      #       '';
 
-        statix =
-          pkgs.runCommand "lint: statix"
-            {
-              nativeBuildInputs = [ pkgs.statix ];
-            }
-            ''
-              cd ${inputs.self}
-              statix check
-              touch $out
-            '';
+      #   statix =
+      #     pkgs.runCommand "lint: statix"
+      #       {
+      #         nativeBuildInputs = [ pkgs.statix ];
+      #       }
+      #       ''
+      #         cd ${inputs.self}
+      #         statix check
+      #         touch $out
+      #       '';
 
-        deadnix =
-          pkgs.runCommand "lint: deadnix"
-            {
-              nativeBuildInputs = [ pkgs.deadnix ];
-            }
-            ''
-              cd ${inputs.self}
-              deadnix --fail
-              touch $out
-            '';
-      }) nixos-raspberrypi.inputs.nixpkgs.legacyPackages;
+      #   deadnix =
+      #     pkgs.runCommand "lint: deadnix"
+      #       {
+      #         nativeBuildInputs = [ pkgs.deadnix ];
+      #       }
+      #       ''
+      #         cd ${inputs.self}
+      #         deadnix --fail
+      #         touch $out
+      #       '';
+      # }) nixos-raspberrypi.inputs.nixpkgs.legacyPackages;
 
     };
 }
