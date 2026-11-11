@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
 
-  boot.loader.raspberry-pi.bootloader = "kernel";
-
   services = {
     openssh = {
       enable = true;

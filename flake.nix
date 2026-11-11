@@ -27,15 +27,17 @@
           (_: {
             networking.hostName = "rpi5";
 
+            boot.loader.raspberry-pi.bootloader = "kernel";
+
             system.stateVersion = "26.05";
           })
         ];
       };
       # Config for raspi4
-      nixosConfigurations.home-pi = nixos-raspberrypi.lib.nixosSystem {
+      nixosConfigurations.home-pi4 = nixos-raspberrypi.lib.nixosSystem {
         specialArgs = inputs;
         modules = [
-          { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-5.base ]; }
+          { imports = [ nixos-raspberrypi.nixosModules.raspberry-pi-4.base ]; }
           ./configuration.nix
           ./modules/hardware.nix
           ./modules/iam.nix
@@ -43,6 +45,8 @@
           ./modules/tailscale.nix
           (_: {
             networking.hostName = "home-pi";
+
+            boot.loader.raspberry-pi.bootloader = "uboot";
 
             system.stateVersion = "26.05";
           })
