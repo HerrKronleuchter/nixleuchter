@@ -10,7 +10,7 @@ _: {
       users = [
         {
           name = "kronleuchter";
-          password = "$2y$10$WrolsmZWxuinSxFW94MuQ.hP1O.pK2UWZNEsoM3FF8SEUQ0L1tsPm";
+          password = "$2y$10$WrolsmZWxuinSxFW94MuQ.hP1O.pK2UWZNEsoM3FF8SEUQ0L1tsPm"; # TODO add sops/age
         }
       ];
       dns = {
@@ -42,17 +42,35 @@ _: {
       # This is, however, fully optional
       filters =
         map
-          (url: {
+          ({ name, url }: {
             enabled = true;
-            inherit url;
+            inherit name url;
           })
           [
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
-            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
-            "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-            "https://v.firebog.net/hosts/Easylist.txt"
-            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
-            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
+            # {
+            #   name = "The Big List of Hacked Malware Web Sites";
+            #   url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt";
+            # }
+            # {
+            #   name = "malicious url blocklist";
+            #   url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt";
+            # }
+            # {
+            #   name = "StevenBlack/hosts";
+            #   url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+            # }
+            # {
+            #   name = "Easylist";
+            #   url = "https://v.firebog.net/hosts/Easylist.txt";
+            # }
+            {
+              name = "Hagezi Pro";
+              url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt";
+            }
+            {
+              name = "Hagezi TIF";
+              url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt";
+            }
           ];
     };
   };
