@@ -44,6 +44,8 @@ _: {
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
             "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
             "https://v.firebog.net/hosts/Easylist.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
+            "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
           ];
     };
   };
