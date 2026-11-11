@@ -5,7 +5,14 @@ _: {
     host = "0.0.0.0";
     port = 3003;
     openFirewall = true;
+    mutableSettings = false; # Settings are overwritten on every rebuild
     settings = {
+      users = [
+        {
+          name = "kronleuchter";
+          password = "$2y$10$WrolsmZWxuinSxFW94MuQ.hP1O.pK2UWZNEsoM3FF8SEUQ0L1tsPm";
+        }
+      ];
       dns = {
         bind_hosts = [
           "0.0.0.0"
