@@ -42,7 +42,7 @@ _: {
       # This is, however, fully optional
       filters =
         map
-          ({ name, url }: {
+          ({ name, url, ... }: {
             enabled = true;
             inherit name url;
           })
